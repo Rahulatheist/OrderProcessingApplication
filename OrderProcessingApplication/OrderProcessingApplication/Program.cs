@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using static OrderProcessingApplication.Program;
 
 namespace OrderProcessingApplication
 {
@@ -40,14 +41,34 @@ namespace OrderProcessingApplication
             }
         }
     }
+
+    class Upgrade : NonPhysicalProduct
+    {
+        public Upgrade()
+        {
+            Operations = new List<string>();
+            base.GetSlip();
+            Operations.Add("Apply the upgrade");
+            Console.WriteLine("Apply the upgrade");
+            base.DropMail();
+        }
+    }
     class Program
     {
+        public enum ProductTypes
+        {
+            Video,
+            Membership,
+            Upgrade,
+            Book,
+            Other
+        }
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
             Video nonPhysicalProduct = new Video("jvahsjvhas");
             Console.WriteLine("Hello World!");
-            Video nonPhysicalProduct2 = new Video("leArning to ski");
+            Upgrade nonPhysicalProduct2 = new Upgrade();
         }
     }
 
@@ -56,10 +77,22 @@ namespace OrderProcessingApplication
         public static NonPhysicalProduct ConvertInputToType(string[] input)
         {
             string name = input[0];
-
-            NonPhysicalProduct product = new Video(name);
-
-            return product;
+            NonPhysicalProduct nonPhysicalproduct=null;
+            ProductTypes type = (ProductTypes)Enum.Parse(typeof(ProductTypes), input[0], ignoreCase: true);
+            switch (type)
+            {
+                case ProductTypes.Upgrade:
+                    {
+                        nonPhysicalproduct = new Upgrade();
+                        break;
+                    }
+                case ProductTypes.Video:
+                    {
+                        nonPhysicalproduct = new Video(name);
+                        break;
+                    }
+            }
+            return nonPhysicalproduct;
         }
     }
 }
