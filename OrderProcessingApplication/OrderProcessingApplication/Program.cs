@@ -22,6 +22,17 @@ namespace OrderProcessingApplication
 
     }
 
+    class Membership : NonPhysicalProduct
+    {
+        public Membership()
+        {
+            Operations = new List<string>();
+            base.GetSlip();
+            Operations.Add("Activate that membership");
+            Console.WriteLine("Activate that membership");
+            base.DropMail();
+        }
+    }
     class Video : NonPhysicalProduct
     {
         public Video(string videoName)
@@ -81,6 +92,11 @@ namespace OrderProcessingApplication
             ProductTypes type = (ProductTypes)Enum.Parse(typeof(ProductTypes), input[0], ignoreCase: true);
             switch (type)
             {
+                case ProductTypes.Membership:
+                    {
+                        nonPhysicalproduct = new Membership();
+                        break;
+                    }
                 case ProductTypes.Upgrade:
                     {
                         nonPhysicalproduct = new Upgrade();
@@ -92,7 +108,7 @@ namespace OrderProcessingApplication
                         break;
                     }
             }
-            return nonPhysicalproduct;
+                    return nonPhysicalproduct;
         }
     }
 }
