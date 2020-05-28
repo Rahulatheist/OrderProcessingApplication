@@ -116,30 +116,35 @@ namespace OrderProcessingApplication
 
     public class OrderProcessor
     {
-        public static NonPhysicalProduct ConvertInputToType(string[] input)
+        public static Product ConvertInputToType(string[] input)
         {
             string name = input[0];
-            NonPhysicalProduct nonPhysicalproduct=null;
+            Product product=null;
             ProductTypes type = (ProductTypes)Enum.Parse(typeof(ProductTypes), input[0], ignoreCase: true);
             switch (type)
             {
                 case ProductTypes.Membership:
                     {
-                        nonPhysicalproduct = new Membership();
+                        product = new Membership();
                         break;
                     }
                 case ProductTypes.Upgrade:
                     {
-                        nonPhysicalproduct = new Upgrade();
+                        product = new Upgrade();
                         break;
                     }
                 case ProductTypes.Video:
                     {
-                        nonPhysicalproduct = new Video(name);
+                        product = new Video(name);
+                        break;
+                    }
+                case ProductTypes.Book:
+                    {
+                        product = new Book(name);
                         break;
                     }
             }
-                    return nonPhysicalproduct;
+            return product;
         }
     }
 }
