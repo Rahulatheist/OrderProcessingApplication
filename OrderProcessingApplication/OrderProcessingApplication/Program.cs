@@ -8,7 +8,7 @@ namespace OrderProcessingApplication
         public string ItemName { get; set; }
         public List<string> Operations { get; set; }
 
-        public void GetSlip()
+        public virtual void GetSlip()
         {
             Operations.Add("Generated a packing slip.");
             Console.WriteLine("Generated a packing slip.");
@@ -30,13 +30,24 @@ namespace OrderProcessingApplication
 
             GetSlip();
         }
+        public override void GetSlip()
+        {
+            base.GetSlip();
+            if (ItemName.ToLower().Equals("learning to ski"))
+            {
+                Operations.Add("'First Aid' video added to the packing slip");
+                Console.WriteLine("'First Aid' video added to the packing slip");
+            }
+        }
     }
     class Program
     {
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            //Video nonPhysicalProduct = new Video("jvahsjvhas");
+            Video nonPhysicalProduct = new Video("jvahsjvhas");
+            Console.WriteLine("Hello World!");
+            Video nonPhysicalProduct2 = new Video("leArning to ski");
         }
     }
 
