@@ -25,5 +25,17 @@ namespace OderProcessingUnitTest
             Assert.AreEqual("'First Aid' video added to the packing slip", result.Operations[1]);
             Assert.AreEqual(2, result.Operations.Count);
         }
+
+        [TestMethod]
+        public void ShouldReturnUpgradeSlipOnly()
+        {
+            var result = OrderProcessor.ConvertInputToType(new string[] { "Upgrade", "Random" });
+            Assert.IsNull(result.ItemName);
+            Assert.AreEqual("Generated a packing slip.", result.Operations[0]);
+            Assert.AreEqual("Apply the upgrade", result.Operations[1]);
+            Assert.AreEqual("Mail Sent", result.Operations[2]);
+            Assert.AreEqual(3, result.Operations.Count);
+
+        }
     }
 }
