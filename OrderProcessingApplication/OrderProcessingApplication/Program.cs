@@ -7,6 +7,7 @@ namespace OrderProcessingApplication
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            Video nonPhysicalProduct = new Video("jvahsjvhas");
         }
     }
 }

@@ -6,8 +6,11 @@ namespace OderProcessingUnitTest
     public class OderProcessingUnitTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void ShouldReturnVideoSlipOnly()
         {
+            var result = Program.ConvertInputToType(new string[] { "video", "Random" });
+            Assert.AreEqual("Random", result.ItemName);
+
         }
     }
 }
