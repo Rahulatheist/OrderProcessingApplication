@@ -37,5 +37,17 @@ namespace OderProcessingUnitTest
             Assert.AreEqual(3, result.Operations.Count);
 
         }
+
+        [TestMethod]
+        public void ShouldReturnMembershipSlip()
+        {
+            var result = OrderProcessor.ConvertInputToType(new string[] { "Membership", "Random" });
+            Assert.IsNull(result.ItemName);
+            Assert.AreEqual("Generated a packing slip.", result.Operations[0]);
+            Assert.AreEqual("Activate that membership", result.Operations[1]);
+            Assert.AreEqual("Mail Sent", result.Operations[2]);
+            Assert.AreEqual(3, result.Operations.Count);
+
+        }
     }
 }
