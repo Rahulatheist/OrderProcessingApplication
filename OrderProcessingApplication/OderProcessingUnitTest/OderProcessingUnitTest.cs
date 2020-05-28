@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OrderProcessingApplication;
 
 namespace OderProcessingUnitTest
 {
@@ -8,8 +9,10 @@ namespace OderProcessingUnitTest
         [TestMethod]
         public void ShouldReturnVideoSlipOnly()
         {
-            var result = Program.ConvertInputToType(new string[] { "video", "Random" });
+            var result = OrderProcessor.ConvertInputToType(new string[] { "video", "Random" });
             Assert.AreEqual("Random", result.ItemName);
+            Assert.AreEqual("Generated a packing slip.", result.Operations[0]);
+            Assert.AreEqual(1, result.Operations.Count);
 
         }
     }
