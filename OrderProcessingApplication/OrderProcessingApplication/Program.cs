@@ -95,6 +95,18 @@ namespace OrderProcessingApplication
             Console.WriteLine("Create a duplicate packing slip for the royalty department.");
         }
     }
+
+    class Other : PhysicalProduct
+    {
+        public Other(string name)
+        {
+            ItemName = name;
+            Operations = new List<string>();
+            base.GetSlip();
+            base.AddCommission();
+        }
+    }
+
     class Program
     {
         public enum ProductTypes
@@ -107,10 +119,11 @@ namespace OrderProcessingApplication
         }
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            Video nonPhysicalProduct = new Video("jvahsjvhas");
-            Console.WriteLine("Hello World!");
-            Upgrade nonPhysicalProduct2 = new Upgrade();
+            Console.WriteLine("Enter Product type and name (if applicable) seperated by space");
+            var input = Console.ReadLine().Split(' ');
+            var output = OrderProcessor.ConvertInputToType(input);
+            Console.WriteLine("Item Name : {0} Operations : {1}", output.ItemName, string.Join(' ', output.Operations));
+            Console.ReadLine();
         }
     }
 
@@ -118,9 +131,17 @@ namespace OrderProcessingApplication
     {
         public static Product ConvertInputToType(string[] input)
         {
-            string name = input[0];
-            Product product=null;
-            ProductTypes type = (ProductTypes)Enum.Parse(typeof(ProductTypes), input[0], ignoreCase: true);
+            ProductTypes type;
+            try
+            {
+                type = (ProductTypes)Enum.Parse(typeof(ProductTypes), input[0], ignoreCase: true);
+            }
+            catch (Exception e)
+            {
+                type = ProductTypes.Other;
+            }
+            Product product;
+            string name = input.Length > 1 ? string.Join(' ', input, 1, input.Length - 1) : string.Empty;
             switch (type)
             {
                 case ProductTypes.Membership:
@@ -141,6 +162,12 @@ namespace OrderProcessingApplication
                 case ProductTypes.Book:
                     {
                         product = new Book(name);
+                        break;
+                    }
+                case ProductTypes.Other:
+                default:
+                    {
+                        product = new Other(name);
                         break;
                     }
             }
